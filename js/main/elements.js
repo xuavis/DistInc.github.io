@@ -194,15 +194,16 @@ function updateAchievementsHTML(){
 			for (let c = 1; c <= ACH_DATA.cols; c++) {
 				let id = r * 10 + c;
 				tmp.el["ach" + id].setTxt(id);
+				const achieved = player.achievements.includes(id) && ACH_DATA.descs[id] !== undefined && !all;
 				tmp.el["ach" + id].setClasses({
 					achCont: true,
 					gld: all,
-					dgn: player.achievements.includes(id) && ACH_DATA.descs[id] !== undefined && !all,
+					dgn: achieved,
 					blocked: ACH_DATA.descs[id] === undefined
 				});
 				tmp.el["ach" + id].changeStyle("visibility", (getAllAchievements().includes(id)) ? "visible" : "hidden");
 				tmp.el["ach" + id].setAttr("widetooltip", tmp.ach[id].desc)
-				tmp.el["ach" + id].setAttr("aria-label", id + ": " + tmp.ach[id].desc)
+				tmp.el["ach" + id].setAttr("aria-label", id + " ("+ (achieved ? "" : "not ") +"completed): " + tmp.ach[id].desc)
 			}
 		}
 		tmp.el.achFin.setTxt(rowsActive==0?"All Achievements are completed!":"")
